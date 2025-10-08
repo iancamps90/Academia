@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { Purchase } from '../types';
+import type { Purchase } from '../types';
 import api from '../utils/api';
 
 const Dashboard: React.FC = () => {

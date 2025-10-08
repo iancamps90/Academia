@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CourseCard from '../components/CourseCard';
-import { Course } from '../types';
+import type { Course } from '../types';
 import api from '../utils/api';
 
 const Home: React.FC = () => {

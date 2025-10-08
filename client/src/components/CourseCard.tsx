@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Course } from '../types';
+import type { Course } from '../types';
 
 interface CourseCardProps {
   course: Course;
