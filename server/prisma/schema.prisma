@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -15,8 +15,10 @@ model User {
   name      String
   email     String   @unique
   password  String
-  role      String   @default("user")
+  role      String   @default("user") // "admin", "user", "guest"
   purchases Purchase[]
+  templatePurchases TemplatePurchase[]
+  articles  Article[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -29,11 +31,44 @@ model Course {
   description String
   price       Float
   image       String
+  published   Boolean    @default(true)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   purchases   Purchase[]
 
   @@map("courses")
+}
+
+model Template {
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String
+  price       Float
+  image       String
+  category    String     // "web", "automation", "other"
+  files       String?    // JSON con URLs de archivos
+  published   Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  purchases   TemplatePurchase[]
+
+  @@map("templates")
+}
+
+model Article {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String   @db.Text
+  excerpt     String?
+  image       String?
+  published   Boolean  @default(false)
+  authorId    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@map("articles")
 }
 
 model Purchase {
@@ -49,4 +84,19 @@ model Purchase {
 
   @@unique([userId, courseId]) // Un usuario no puede comprar el mismo curso dos veces
   @@map("purchases")
+}
+
+model TemplatePurchase {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  templateId Int
+  stripeSessionId String? // Para tracking de Stripe
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  template Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, templateId]) // Un usuario no puede comprar la misma plantilla dos veces
+  @@map("template_purchases")
 }

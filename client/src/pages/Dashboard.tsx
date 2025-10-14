@@ -26,78 +26,154 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
+    <div style={{ 
+      minHeight: '100vh', 
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      padding: '2rem 0'
+    }}>
+      <div className="container">
+        {/* Header Ultra Moderno */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-12"
+          style={{ 
+            textAlign: 'center', 
+            marginBottom: '3rem',
+            color: 'white'
+          }}
         >
-          <h1 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
-            ¡Hola, {user?.name}! 👋
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            style={{
+              width: '100px',
+              height: '100px',
+              backgroundColor: 'rgba(255,255,255,0.1)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1.5rem',
+              backdropFilter: 'blur(10px)',
+              border: '2px solid rgba(255,255,255,0.2)'
+            }}
+          >
+            <span style={{ fontSize: '2.5rem' }}>👋</span>
+          </motion.div>
+          <h1 style={{ 
+            fontSize: '3rem', 
+            fontWeight: '700', 
+            marginBottom: '1rem',
+            textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          }}>
+            ¡Hola, {user?.name}!
           </h1>
-          <p className="text-xl text-secondary-600">
+          <p style={{ 
+            fontSize: '1.25rem', 
+            opacity: 0.9,
+            textShadow: '0 1px 2px rgba(0,0,0,0.1)'
+          }}>
             Bienvenido a tu dashboard de academy.iancamps.dev
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
           {/* Mis Cursos */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-2"
+            style={{ gridColumn: 'span 2' }}
           >
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-secondary-900">
-                  Mis Cursos
+            <div style={{
+              backgroundColor: 'rgba(255,255,255,0.95)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '1rem',
+              padding: '2rem',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+              border: '1px solid rgba(255,255,255,0.2)'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#111827' }}>
+                  📚 Mis Cursos
                 </h2>
                 <Link
                   to="/courses"
-                  className="btn-primary"
+                  style={{
+                    backgroundColor: '#2563eb',
+                    color: 'white',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '0.5rem',
+                    textDecoration: 'none',
+                    fontWeight: '500',
+                    transition: 'all 0.2s'
+                  }}
                 >
                   Explorar Cursos
                 </Link>
               </div>
 
               {loading ? (
-                <div className="flex justify-center py-12">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+                <div style={{ textAlign: 'center', padding: '3rem' }}>
+                  <div style={{ 
+                    width: '40px', 
+                    height: '40px', 
+                    border: '3px solid #e5e7eb', 
+                    borderTop: '3px solid #2563eb', 
+                    borderRadius: '50%', 
+                    animation: 'spin 1s linear infinite',
+                    margin: '0 auto'
+                  }}></div>
+                  <p style={{ marginTop: '1rem', color: '#6b7280' }}>Cargando tus cursos...</p>
                 </div>
               ) : purchases.length > 0 ? (
-                <div className="space-y-4">
+                <div style={{ display: 'grid', gap: '1rem' }}>
                   {purchases.map((purchase, index) => (
                     <motion.div
                       key={purchase.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className="border border-secondary-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-200"
+                      style={{
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '0.75rem',
+                        padding: '1.5rem',
+                        backgroundColor: 'white',
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+                        transition: 'all 0.2s'
+                      }}
                     >
-                      <div className="flex items-center space-x-4">
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         <img
                           src={purchase.course.image}
                           alt={purchase.course.title}
-                          className="w-16 h-16 object-cover rounded-lg"
+                          style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '0.5rem' }}
                         />
-                        <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-secondary-900">
+                        <div style={{ flex: 1 }}>
+                          <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827', marginBottom: '0.25rem' }}>
                             {purchase.course.title}
                           </h3>
-                          <p className="text-secondary-600 text-sm">
+                          <p style={{ color: '#6b7280', fontSize: '0.875rem' }}>
                             Comprado el {new Date(purchase.createdAt).toLocaleDateString('es-ES')}
                           </p>
                         </div>
-                        <div className="text-right">
-                          <span className="text-lg font-bold text-primary-600">
+                        <div style={{ textAlign: 'right' }}>
+                          <span style={{ fontSize: '1.25rem', fontWeight: '700', color: '#2563eb' }}>
                             €{purchase.course.price}
                           </span>
-                          <div className="mt-2">
-                            <button className="btn-primary text-sm">
+                          <div style={{ marginTop: '0.5rem' }}>
+                            <button style={{
+                              backgroundColor: '#10b981',
+                              color: 'white',
+                              padding: '0.5rem 1rem',
+                              borderRadius: '0.375rem',
+                              border: 'none',
+                              fontSize: '0.875rem',
+                              fontWeight: '500',
+                              cursor: 'pointer'
+                            }}>
                               Acceder al Curso
                             </button>
                           </div>
@@ -111,22 +187,26 @@ const Dashboard: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="text-center py-12"
+                  style={{ textAlign: 'center', padding: '3rem' }}
                 >
-                  <div className="text-secondary-400 mb-4">
-                    <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-semibold text-secondary-600 mb-2">
+                  <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📚</div>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#6b7280', marginBottom: '0.5rem' }}>
                     Aún no tienes cursos
                   </h3>
-                  <p className="text-secondary-500 mb-6">
+                  <p style={{ color: '#9ca3af', marginBottom: '1.5rem' }}>
                     Explora nuestros cursos y comienza tu viaje de aprendizaje
                   </p>
                   <Link
                     to="/courses"
-                    className="btn-primary"
+                    style={{
+                      backgroundColor: '#2563eb',
+                      color: 'white',
+                      padding: '0.75rem 1.5rem',
+                      borderRadius: '0.5rem',
+                      textDecoration: 'none',
+                      fontWeight: '500',
+                      display: 'inline-block'
+                    }}
                   >
                     Explorar Cursos
                   </Link>
@@ -135,58 +215,106 @@ const Dashboard: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Sidebar */}
+          {/* Sidebar Ultra Moderno */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="space-y-6"
+            style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
           >
             {/* Estadísticas */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-secondary-900 mb-4">
-                Tu Progreso
+            <div style={{
+              backgroundColor: 'rgba(255,255,255,0.95)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '1rem',
+              padding: '1.5rem',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+              border: '1px solid rgba(255,255,255,0.2)'
+            }}>
+              <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827', marginBottom: '1rem' }}>
+                📊 Tu Progreso
               </h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-secondary-600">Cursos Comprados</span>
-                  <span className="font-bold text-primary-600">{purchases.length}</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#6b7280', fontSize: '0.875rem' }}>Cursos Comprados</span>
+                  <span style={{ fontWeight: '700', color: '#2563eb', fontSize: '1.125rem' }}>{purchases.length}</span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-secondary-600">Miembro desde</span>
-                  <span className="font-bold text-secondary-900">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#6b7280', fontSize: '0.875rem' }}>Miembro desde</span>
+                  <span style={{ fontWeight: '600', color: '#111827', fontSize: '0.875rem' }}>
                     {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('es-ES') : 'N/A'}
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-secondary-600">Rol</span>
-                  <span className="font-bold text-secondary-900 capitalize">{user?.role}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#6b7280', fontSize: '0.875rem' }}>Rol</span>
+                  <span style={{ fontWeight: '600', color: '#111827', fontSize: '0.875rem', textTransform: 'capitalize' }}>{user?.role}</span>
                 </div>
               </div>
             </div>
 
             {/* Acciones Rápidas */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-secondary-900 mb-4">
-                Acciones Rápidas
+            <div style={{
+              backgroundColor: 'rgba(255,255,255,0.95)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '1rem',
+              padding: '1.5rem',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+              border: '1px solid rgba(255,255,255,0.2)'
+            }}>
+              <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827', marginBottom: '1rem' }}>
+                ⚡ Acciones Rápidas
               </h3>
-              <div className="space-y-3">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <Link
                   to="/courses"
-                  className="block w-full btn-primary text-center"
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    backgroundColor: '#2563eb',
+                    color: 'white',
+                    padding: '0.75rem',
+                    borderRadius: '0.5rem',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    fontWeight: '500',
+                    transition: 'all 0.2s'
+                  }}
                 >
                   Explorar Cursos
                 </Link>
                 <Link
                   to="/profile"
-                  className="block w-full btn-secondary text-center"
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    backgroundColor: '#f1f5f9',
+                    color: '#0f172a',
+                    padding: '0.75rem',
+                    borderRadius: '0.5rem',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    fontWeight: '500',
+                    border: '1px solid #e2e8f0',
+                    transition: 'all 0.2s'
+                  }}
                 >
                   Mi Perfil
                 </Link>
                 {user?.role === 'admin' && (
                   <Link
                     to="/admin"
-                    className="block w-full bg-secondary-600 hover:bg-secondary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 text-center"
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      backgroundColor: '#1f2937',
+                      color: 'white',
+                      padding: '0.75rem',
+                      borderRadius: '0.5rem',
+                      textDecoration: 'none',
+                      textAlign: 'center',
+                      fontWeight: '500',
+                      transition: 'all 0.2s'
+                    }}
                   >
                     Panel Admin
                   </Link>
@@ -195,14 +323,20 @@ const Dashboard: React.FC = () => {
             </div>
 
             {/* Próximamente */}
-            <div className="bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl shadow-lg p-6 text-white">
-              <h3 className="text-lg font-semibold mb-2">
+            <div style={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              borderRadius: '1rem',
+              padding: '1.5rem',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+              color: 'white'
+            }}>
+              <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '0.5rem' }}>
                 🚀 Próximamente
               </h3>
-              <p className="text-primary-100 text-sm mb-4">
+              <p style={{ opacity: 0.9, fontSize: '0.875rem', marginBottom: '1rem' }}>
                 Nuevos cursos y automatizaciones están en camino
               </p>
-              <div className="text-xs text-primary-200">
+              <div style={{ fontSize: '0.75rem', opacity: 0.8, lineHeight: '1.4' }}>
                 • Automatización con Zapier<br/>
                 • Integraciones con n8n<br/>
                 • Templates de React<br/>

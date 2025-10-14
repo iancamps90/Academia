@@ -11,6 +11,14 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CourseDetail from './pages/CourseDetail';
+import Courses from './pages/Courses';
+import Templates from './pages/Templates';
+import TemplateDetail from './pages/TemplateDetail';
+import Blog from './pages/Blog';
+import ArticleDetail from './pages/ArticleDetail';
+import Admin from './pages/Admin';
+import Success from './pages/Success';
+import Cancel from './pages/Cancel';
 
 function App() {
   return (
@@ -19,65 +27,68 @@ function App() {
         <div className="min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route 
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="/courses/:id" element={<CourseDetail />} />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/courses" element={<Courses />} />
+                  <Route path="/courses/:id" element={<CourseDetail />} />
+                  <Route path="/templates" element={<Templates />} />
+                  <Route path="/templates/:id" element={<TemplateDetail />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:id" element={<ArticleDetail />} />
+                  <Route path="/success" element={<Success />} />
+                  <Route path="/cancel" element={<Cancel />} />
+                  <Route 
+                    path="/dashboard" 
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    } 
+                  />
               <Route 
                 path="/admin" 
                 element={
                   <ProtectedRoute adminOnly>
-                    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center">
-                      <div className="text-center">
-                        <h1 className="text-3xl font-bold text-secondary-900 mb-4">
-                          Panel de Administración
-                        </h1>
-                        <p className="text-secondary-600 mb-6">
-                          Próximamente: CRUD de cursos y gestión de usuarios
-                        </p>
-                        <div className="bg-white rounded-xl shadow-lg p-8 max-w-md mx-auto">
-                          <div className="text-primary-600 mb-4">
-                            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          </div>
-                          <h3 className="text-xl font-semibold text-secondary-900 mb-2">
-                            En Desarrollo
-                          </h3>
-                          <p className="text-secondary-600 text-sm">
-                            Estamos trabajando en las funcionalidades de administración. 
-                            Pronto podrás gestionar cursos y usuarios desde aquí.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    <Admin />
                   </ProtectedRoute>
                 } 
               />
               <Route 
                 path="*" 
                 element={
-                  <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center">
-                    <div className="text-center">
-                      <h1 className="text-6xl font-bold text-primary-600 mb-4">404</h1>
-                      <h2 className="text-2xl font-semibold text-secondary-900 mb-4">
+                  <div style={{ 
+                    minHeight: '100vh', 
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '2rem 1rem'
+                  }}>
+                    <div style={{ textAlign: 'center', color: 'white' }}>
+                      <div style={{ fontSize: '8rem', fontWeight: '700', marginBottom: '1rem', textShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
+                        404
+                      </div>
+                      <h2 style={{ fontSize: '2rem', fontWeight: '600', marginBottom: '1rem', textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
                         Página no encontrada
                       </h2>
-                      <p className="text-secondary-600 mb-8">
+                      <p style={{ fontSize: '1.125rem', opacity: 0.9, marginBottom: '2rem', textShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
                         La página que buscas no existe o ha sido movida.
                       </p>
                       <a
                         href="/"
-                        className="btn-primary"
+                        style={{
+                          backgroundColor: 'white',
+                          color: '#2563eb',
+                          padding: '0.75rem 1.5rem',
+                          borderRadius: '0.5rem',
+                          textDecoration: 'none',
+                          fontWeight: '500',
+                          display: 'inline-block',
+                          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                          transition: 'all 0.2s'
+                        }}
                       >
                         Volver al Inicio
                       </a>

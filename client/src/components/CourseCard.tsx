@@ -15,53 +15,33 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, index = 0 }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ y: -5 }}
-      className="card group cursor-pointer"
+      className="card course-card"
     >
-      <Link to={`/courses/${course.id}`}>
-        <div className="relative overflow-hidden">
-          <img
-            src={course.image}
-            alt={course.title}
-            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-          <div className="absolute top-4 right-4 bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-            €{course.price}
-          </div>
-        </div>
+      <Link to={`/courses/${course.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <img
+          src={course.image}
+          alt={course.title}
+          className="course-image"
+        />
         
-        <div className="p-6">
-          <h3 className="text-xl font-semibold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors duration-200">
+        <div className="course-content">
+          <h3 className="course-title">
             {course.title}
           </h3>
-          <p className="text-secondary-600 mb-4 line-clamp-3">
+          <p className="course-description">
             {course.description}
           </p>
+          <div className="course-price">
+            €{course.price}
+          </div>
           
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-secondary-500">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ fontSize: '0.875rem', color: '#9ca3af' }}>
               {new Date(course.createdAt).toLocaleDateString('es-ES')}
             </span>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="inline-flex items-center text-primary-600 font-medium group-hover:text-primary-700 transition-colors duration-200">
-                Ver detalles
-                <svg
-                  className="ml-2 w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </span>
-            </motion.div>
+            <span style={{ color: '#2563eb', fontWeight: '500' }}>
+              Ver detalles →
+            </span>
           </div>
         </div>
       </Link>

@@ -2,50 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import type { Course } from '../types';
+import type { Template } from '../types';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
 
-const CourseDetail: React.FC = () => {
+const TemplateDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [course, setCourse] = useState<Course | null>(null);
+  const [template, setTemplate] = useState<Template | null>(null);
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState(false);
 
   useEffect(() => {
-    const fetchCourse = async () => {
+    const fetchTemplate = async () => {
       try {
-        const response = await api.get(`/courses/${id}`);
-        setCourse(response.data.course);
+        const response = await api.get(`/templates/${id}`);
+        setTemplate(response.data);
       } catch (error) {
-        console.error('Error fetching course:', error);
-        toast.error('Error al cargar el curso');
-        navigate('/courses');
+        console.error('Error fetching template:', error);
+        toast.error('Error al cargar la plantilla');
+        navigate('/templates');
       } finally {
         setLoading(false);
       }
     };
 
     if (id) {
-      fetchCourse();
+      fetchTemplate();
     }
   }, [id, navigate]);
 
   const handlePurchase = async () => {
     if (!user) {
-      toast.error('Debes iniciar sesión para comprar cursos');
+      toast.error('Debes iniciar sesión para comprar plantillas');
       navigate('/login');
       return;
     }
 
-    if (!course) return;
+    if (!template) return;
 
     setPurchasing(true);
     try {
-      const response = await api.post(`/purchases/checkout/${course.id}`);
-      // Redirigir a Stripe Checkout
+      const response = await api.post(`/checkout/template/${template.id}`);
       window.location.href = response.data.url;
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Error al procesar el pago');
@@ -54,25 +53,43 @@ const CourseDetail: React.FC = () => {
     }
   };
 
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'web': return '🌐';
+      case 'automation': return '⚡';
+      case 'other': return '📦';
+      default: return '📄';
+    }
+  };
+
+  const getCategoryName = (category: string) => {
+    switch (category) {
+      case 'web': return 'Desarrollo Web';
+      case 'automation': return 'Automatización';
+      case 'other': return 'Otros';
+      default: return 'General';
+    }
+  };
+
   if (loading) {
     return (
       <div className="loading">
-        <p>Cargando curso...</p>
+        <p>Cargando plantilla...</p>
       </div>
     );
   }
 
-  if (!course) {
+  if (!template) {
     return (
       <div style={{ textAlign: 'center', padding: '4rem' }}>
         <h1 style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '1rem', color: '#111827' }}>
-          Curso no encontrado
+          Plantilla no encontrada
         </h1>
         <button
-          onClick={() => navigate('/courses')}
+          onClick={() => navigate('/templates')}
           className="btn btn-primary"
         >
-          Volver a Cursos
+          Volver a Plantillas
         </button>
       </div>
     );
@@ -83,45 +100,59 @@ const CourseDetail: React.FC = () => {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
         {/* Contenido Principal */}
         <div>
-          {/* Imagen del Curso */}
+          {/* Imagen de la Plantilla */}
           <div className="card" style={{ marginBottom: '2rem' }}>
             <img
-              src={course.image}
-              alt={course.title}
+              src={template.image}
+              alt={template.title}
               style={{ width: '100%', height: '300px', objectFit: 'cover' }}
             />
             <div style={{ padding: '1.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+                <span style={{ fontSize: '1.5rem' }}>{getCategoryIcon(template.category)}</span>
+                <span style={{ 
+                  fontSize: '0.875rem', 
+                  backgroundColor: '#e0e7ff', 
+                  color: '#3730a3', 
+                  padding: '0.5rem 1rem', 
+                  borderRadius: '0.5rem',
+                  fontWeight: '500'
+                }}>
+                  {getCategoryName(template.category)}
+                </span>
+              </div>
+              
               <h1 style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '1rem', color: '#111827' }}>
-                {course.title}
+                {template.title}
               </h1>
               
               <div style={{ marginBottom: '1rem', color: '#6b7280' }}>
-                {new Date(course.createdAt).toLocaleDateString('es-ES')}
+                {new Date(template.createdAt).toLocaleDateString('es-ES')}
               </div>
 
               <p style={{ fontSize: '1.125rem', color: '#374151', lineHeight: '1.6' }}>
-                {course.description}
+                {template.description}
               </p>
             </div>
           </div>
 
-          {/* Contenido del Curso */}
+          {/* Características de la Plantilla */}
           <div className="card">
             <div style={{ padding: '1.5rem' }}>
               <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '1rem', color: '#111827' }}>
-                ¿Qué aprenderás?
+                ¿Qué incluye esta plantilla?
               </h2>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 {[
-                  'Conceptos fundamentales y mejores prácticas',
-                  'Ejemplos prácticos y casos de uso reales',
-                  'Herramientas y tecnologías actuales',
-                  'Proyectos completos paso a paso',
-                  'Recursos adicionales y documentación',
-                  'Soporte continuo y actualizaciones'
+                  'Código fuente completo y comentado',
+                  'Documentación detallada de instalación',
+                  'Archivos de configuración listos',
+                  'Ejemplos de uso y casos prácticos',
+                  'Soporte técnico por 30 días',
+                  'Actualizaciones gratuitas por 1 año'
                 ].map((item, index) => (
-                  <li key={index} style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center' }}>
-                    <span style={{ color: '#10b981', marginRight: '0.5rem' }}>✓</span>
+                  <li key={index} style={{ marginBottom: '0.75rem', display: 'flex', alignItems: 'center' }}>
+                    <span style={{ color: '#10b981', marginRight: '0.75rem', fontSize: '1.25rem' }}>✓</span>
                     <span style={{ color: '#374151' }}>{item}</span>
                   </li>
                 ))}
@@ -135,10 +166,10 @@ const CourseDetail: React.FC = () => {
           <div className="card" style={{ position: 'sticky', top: '2rem' }}>
             <div style={{ padding: '1.5rem', textAlign: 'center' }}>
               <div style={{ fontSize: '2.5rem', fontWeight: '700', color: '#2563eb', marginBottom: '0.5rem' }}>
-                €{course.price}
+                €{template.price}
               </div>
               <p style={{ color: '#6b7280', marginBottom: '1.5rem' }}>
-                Pago único • Acceso de por vida
+                Pago único • Acceso inmediato
               </p>
 
               <button
@@ -147,17 +178,17 @@ const CourseDetail: React.FC = () => {
                 className="btn btn-primary"
                 style={{ width: '100%', padding: '1rem', fontSize: '1.125rem', marginBottom: '1.5rem' }}
               >
-                {purchasing ? 'Procesando...' : 'Comprar Ahora'}
+                {purchasing ? 'Procesando...' : 'Comprar Plantilla'}
               </button>
 
               <div style={{ textAlign: 'left' }}>
                 <div style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', fontSize: '0.875rem', color: '#6b7280' }}>
                   <span style={{ color: '#10b981', marginRight: '0.5rem' }}>✓</span>
-                  <span>Acceso inmediato</span>
+                  <span>Descarga inmediata</span>
                 </div>
                 <div style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', fontSize: '0.875rem', color: '#6b7280' }}>
                   <span style={{ color: '#10b981', marginRight: '0.5rem' }}>✓</span>
-                  <span>Garantía de 30 días</span>
+                  <span>Licencia comercial</span>
                 </div>
                 <div style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', fontSize: '0.875rem', color: '#6b7280' }}>
                   <span style={{ color: '#10b981', marginRight: '0.5rem' }}>✓</span>
@@ -182,4 +213,4 @@ const CourseDetail: React.FC = () => {
   );
 };
 
-export default CourseDetail;
+export default TemplateDetail;

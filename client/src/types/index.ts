@@ -2,7 +2,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  role: 'user' | 'admin';
+  role: 'user' | 'admin' | 'guest';
   createdAt: string;
 }
 
@@ -15,12 +15,45 @@ export interface Course {
   createdAt: string;
 }
 
+export interface Template {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  image: string;
+  category: 'web' | 'automation' | 'other';
+  files?: string;
+  createdAt: string;
+}
+
+export interface Article {
+  id: number;
+  title: string;
+  content: string;
+  excerpt?: string;
+  image?: string;
+  published: boolean;
+  authorId: number;
+  createdAt: string;
+  author: {
+    name: string;
+  };
+}
+
 export interface Purchase {
   id: number;
   userId: number;
   courseId: number;
   createdAt: string;
   course: Course;
+}
+
+export interface TemplatePurchase {
+  id: number;
+  userId: number;
+  templateId: number;
+  createdAt: string;
+  template: Template;
 }
 
 export interface AuthContextType {

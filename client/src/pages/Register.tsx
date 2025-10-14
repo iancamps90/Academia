@@ -81,37 +81,54 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div style={{ 
+      minHeight: '100vh', 
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '2rem 1rem'
+    }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-md w-full space-y-8"
+        style={{ maxWidth: '400px', width: '100%' }}
       >
-        <div className="text-center">
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mx-auto h-16 w-16 bg-primary-600 rounded-full flex items-center justify-center"
+            style={{
+              width: '80px',
+              height: '80px',
+              backgroundColor: 'white',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1.5rem',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
+            }}
           >
-            <span className="text-white font-bold text-2xl">A</span>
+            <span style={{ color: '#2563eb', fontSize: '2rem', fontWeight: '700' }}>A</span>
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-6 text-3xl font-bold text-secondary-900"
+            style={{ fontSize: '2rem', fontWeight: '700', color: 'white', marginBottom: '0.5rem' }}
           >
-            Crear Cuenta
+            ¡Únete a nosotros!
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="mt-2 text-sm text-secondary-600"
+            style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1rem' }}
           >
-            Únete a academy.iancamps.dev y comienza tu aprendizaje
+            Crea tu cuenta en academy.iancamps.dev
           </motion.p>
         </div>
 
@@ -119,106 +136,141 @@ const Register: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-8 space-y-6 bg-white p-8 rounded-xl shadow-lg"
+          style={{
+            backgroundColor: 'white',
+            padding: '2rem',
+            borderRadius: '1rem',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
+          }}
           onSubmit={handleSubmit}
         >
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-secondary-700 mb-1">
-                Nombre completo
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                className={`input-field ${errors.name ? 'border-red-500 focus:ring-red-500' : ''}`}
-                placeholder="Tu nombre completo"
-              />
-              {errors.name && (
-                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className={`input-field ${errors.email ? 'border-red-500 focus:ring-red-500' : ''}`}
-                placeholder="tu@email.com"
-              />
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-secondary-700 mb-1">
-                Contraseña
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                value={formData.password}
-                onChange={handleChange}
-                className={`input-field ${errors.password ? 'border-red-500 focus:ring-red-500' : ''}`}
-                placeholder="Mínimo 6 caracteres"
-              />
-              {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-secondary-700 mb-1">
-                Confirmar contraseña
-              </label>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                autoComplete="new-password"
-                required
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className={`input-field ${errors.confirmPassword ? 'border-red-500 focus:ring-red-500' : ''}`}
-                placeholder="Repite tu contraseña"
-              />
-              {errors.confirmPassword && (
-                <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
-              )}
-            </div>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', color: '#374151' }}>
+              Nombre completo
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                border: `1px solid ${errors.name ? '#ef4444' : '#d1d5db'}`,
+                borderRadius: '0.5rem',
+                fontSize: '1rem',
+                outline: 'none',
+                transition: 'border-color 0.2s'
+              }}
+              placeholder="Tu nombre completo"
+            />
+            {errors.name && (
+              <p style={{ marginTop: '0.25rem', fontSize: '0.875rem', color: '#ef4444' }}>{errors.name}</p>
+            )}
           </div>
 
-          <div className="flex items-center">
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', color: '#374151' }}>
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                border: `1px solid ${errors.email ? '#ef4444' : '#d1d5db'}`,
+                borderRadius: '0.5rem',
+                fontSize: '1rem',
+                outline: 'none',
+                transition: 'border-color 0.2s'
+              }}
+              placeholder="tu@email.com"
+            />
+            {errors.email && (
+              <p style={{ marginTop: '0.25rem', fontSize: '0.875rem', color: '#ef4444' }}>{errors.email}</p>
+            )}
+          </div>
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', color: '#374151' }}>
+              Contraseña
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                border: `1px solid ${errors.password ? '#ef4444' : '#d1d5db'}`,
+                borderRadius: '0.5rem',
+                fontSize: '1rem',
+                outline: 'none',
+                transition: 'border-color 0.2s'
+              }}
+              placeholder="Mínimo 6 caracteres"
+            />
+            {errors.password && (
+              <p style={{ marginTop: '0.25rem', fontSize: '0.875rem', color: '#ef4444' }}>{errors.password}</p>
+            )}
+          </div>
+
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', color: '#374151' }}>
+              Confirmar contraseña
+            </label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              autoComplete="new-password"
+              required
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                border: `1px solid ${errors.confirmPassword ? '#ef4444' : '#d1d5db'}`,
+                borderRadius: '0.5rem',
+                fontSize: '1rem',
+                outline: 'none',
+                transition: 'border-color 0.2s'
+              }}
+              placeholder="Repite tu contraseña"
+            />
+            {errors.confirmPassword && (
+              <p style={{ marginTop: '0.25rem', fontSize: '0.875rem', color: '#ef4444' }}>{errors.confirmPassword}</p>
+            )}
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
             <input
               id="terms"
               name="terms"
               type="checkbox"
               required
-              className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-secondary-300 rounded"
+              style={{ marginRight: '0.5rem' }}
             />
-            <label htmlFor="terms" className="ml-2 block text-sm text-secondary-700">
+            <label style={{ fontSize: '0.875rem', color: '#6b7280' }}>
               Acepto los{' '}
-              <a href="#" className="text-primary-600 hover:text-primary-500">
+              <a href="#" style={{ color: '#2563eb', textDecoration: 'none' }}>
                 términos y condiciones
               </a>{' '}
               y la{' '}
-              <a href="#" className="text-primary-600 hover:text-primary-500">
+              <a href="#" style={{ color: '#2563eb', textDecoration: 'none' }}>
                 política de privacidad
               </a>
             </label>
@@ -229,24 +281,29 @@ const Register: React.FC = () => {
             whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={loading}
-            className="w-full btn-primary py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              width: '100%',
+              padding: '0.75rem',
+              backgroundColor: '#2563eb',
+              color: 'white',
+              border: 'none',
+              borderRadius: '0.5rem',
+              fontSize: '1rem',
+              fontWeight: '500',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.7 : 1,
+              transition: 'all 0.2s'
+            }}
           >
-            {loading ? (
-              <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                Creando cuenta...
-              </div>
-            ) : (
-              'Crear Cuenta'
-            )}
+            {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
           </motion.button>
 
-          <div className="text-center">
-            <p className="text-sm text-secondary-600">
+          <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+            <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
               ¿Ya tienes una cuenta?{' '}
               <Link
                 to="/login"
-                className="font-medium text-primary-600 hover:text-primary-500"
+                style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '500' }}
               >
                 Inicia sesión aquí
               </Link>
